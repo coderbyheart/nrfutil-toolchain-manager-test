@@ -1,0 +1,25 @@
+name: Build
+
+on:
+  push:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        run: git clone https://github.com/hello-nrfcloud/firmware
+
+      - name: Build docker image
+        run: |
+          cp Dockerfile firmware
+          cd firmware
+          docker buildx build -t hello-nrfcloud-firmware .
+
+      - name: Build firmware
+        run: |
+          docker run -v $PWD:/workdir hello-nrfcloud-firmware \
+            nrfutil toolchain-manager launch /bin/bash -- \
+            -c 'cd asset_tracker_v2 && west build -b thingy91_nrf9160_ns'
