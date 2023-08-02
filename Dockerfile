@@ -19,6 +19,4 @@ ADD . /workdir
 
 WORKDIR /workdir
 
-RUN rm -rf /workdir/.west
-
-RUN nrfutil toolchain-manager launch /bin/bash -- -c 'west init && west update'
+RUN nrfutil toolchain-manager launch /bin/bash -- -c 'west init -l . && west update'
