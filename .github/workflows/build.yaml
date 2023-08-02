@@ -23,6 +23,7 @@ jobs:
 
       - name: Build firmware
         run: |
-          docker run -v $PWD:/workdir hello-nrfcloud-firmware \
+          cd firmware
+          docker run hello-nrfcloud-firmware \
             nrfutil toolchain-manager launch /bin/bash -- \
             -c 'cd asset_tracker_v2 && west build -b thingy91_nrf9160_ns'
